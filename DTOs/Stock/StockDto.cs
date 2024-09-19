@@ -11,6 +11,6 @@ namespace api.DTOs.Stock
         public decimal Purchase { get; set; }
         public decimal LastDiv { get; set; }
         public long MarketCap { get; set; }
-        public List<CommentDto> Comments { get; set; }
+        public List<CommentDto>? Comments { get; set; }
     }
 }

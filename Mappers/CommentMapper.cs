@@ -17,13 +17,13 @@ namespace api.Mappers
             };
         }
 
-        public static Comment ToCommentFromCreateDto(this CreateCommentRequestDto model)
+        public static Comment ToCommentFromCreateDto(this CreateCommentRequestDto model, int stockId)
         {
             return new Comment
             {
                 Title = model.Title,
                 Content = model.Content,
-                StockId = model.StockId,
+                StockId = stockId,
             };
         }
     }
