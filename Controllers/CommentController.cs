@@ -25,7 +25,7 @@ namespace api.Controllers
             return Ok(results);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var comment = await _commentRepo.GetByIdAsync(id);
@@ -36,7 +36,7 @@ namespace api.Controllers
             return Ok(comment.ToCommentDto());
         }
 
-        [HttpPost("{stockId}")]
+        [HttpPost("{stockId:int}")]
         public async Task<IActionResult> Create([FromRoute] int stockId, [FromBody] CreateCommentRequestDto createCommendRequestDto)
         {
             var stockExist = await _stockRepo.IsStockExist(stockId);
@@ -49,7 +49,7 @@ namespace api.Controllers
             return CreatedAtAction(nameof(Get), new { id = comment.Id }, comment.ToCommentDto());
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentDto updateComment)
         {
             var updatedComment = await _commentRepo.UpdateAsync(id, updateComment);
@@ -60,7 +60,7 @@ namespace api.Controllers
             return Ok(updatedComment.ToCommentDto());
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var comment = await _commentRepo.DeleteAsync(id);
