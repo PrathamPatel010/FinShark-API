@@ -1,4 +1,5 @@
 using api.DTOs.Account;
+using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,12 @@ namespace api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
-        public AccountController(UserManager<AppUser> userManager)
+        private readonly ITokenService _tokenService;
+
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService)
         {
             _userManager = userManager;
+            _tokenService = tokenService;
         }
 
         [HttpPost("signup")]
@@ -35,7 +39,13 @@ namespace api.Controllers
                 {
                     return StatusCode(500, roleResult.Errors);
                 }
-                return Ok("User Created: \n" + createdUser);
+                var response = new NewUserDto
+                {
+                    Username = appUser.UserName,
+                    Email = appUser.Email,
+                    Token = _tokenService.CreateToken(appUser),
+                };
+                return Ok(response);
             }
             catch (Exception e)
             {
