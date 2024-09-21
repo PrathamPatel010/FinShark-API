@@ -9,5 +9,7 @@ namespace api.Interfaces
     public interface IPortfolioRepository
     {
         public Task<List<Stock>> GetUserPortfolio(AppUser appUser);
+        public Task<Portfolio> AddToPortfolio(Portfolio portfolio);
+        public Task<Portfolio> DeletePortfolio(AppUser appUser, string symbol);
     }
 }
